@@ -17,7 +17,7 @@ def id_list():
         return jsonify({"error": "invalid 'start_id' key"})
     if limit == None or limit == "":
         return jsonify({"error": "invalid 'limit' key"})
-    return db.listColumsSecret("id", start_id, limit)
+    return jsonify(db.listColumsSecret("id", start_id, limit))
 
 @api.route('/game.getPost')
 def game_getpost():
@@ -34,14 +34,14 @@ def game_list():
         return jsonify({"error": "invalid 'start_id' key"})
     if limit == None or limit == "":
         return jsonify({"error": "invalid 'limit' key"})
-    return db.listColums("game", start_id, limit)
+    return jsonify(db.listColums("game", start_id, limit))
 
 @api.route('/game.getCategory')
 def game_getCategory():
     post_id = request.args.get("post_id")
     if post_id == None or post_id == "":
         return jsonify({"error": "invalid 'post_id' key"})
-    post = jsonify(db.printColumn("game", post_id))
+    post = db.printColumn("game", post_id)
     return jsonify(db.printColumn("category", post["category"]))
 
 @api.route('/game.getAuthor')
@@ -49,7 +49,7 @@ def game_getAuthor():
     post_id = request.args.get("post_id")
     if post_id == None or post_id == "":
         return jsonify({"error": "invalid 'post_id' key"})
-    post = jsonify(db.printColumn("game", post_id))
+    post = db.printColumn("game", post_id)
     return jsonify(db.printColumn("id", post["author"])[1])
 
 @api.route('/category.get')
@@ -57,7 +57,7 @@ def category_get():
     category_id = request.args.get("category_id")
     if category_id == None or category_id == "":
         return jsonify({"error": "invalid 'category_id' key"})
-    post = jsonify(db.printColumn("game", category_id))
+    post = db.printColumn("game", category_id)
     return jsonify(db.printColumn("category", post["category"]))
 
 @api.route('/category.list')
@@ -68,5 +68,5 @@ def category_list():
         return jsonify({"error": "invalid 'start_id' key"})
     if limit == None or limit == "":
         return jsonify({"error": "invalid 'limit' key"})
-    return db.listColums("category", start_id, limit)
+    return jsonify(db.listColums("category", start_id, limit))
 
