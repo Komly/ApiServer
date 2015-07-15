@@ -1,9 +1,9 @@
 from flask import Flask, request
-import app.controller
 
-def Server():
-    controller = app.controller
+def create_app():
+    app = Flask(__name__)
 
-    server = Flask(__name__)
-    server.add_url_rule("/method/<method>", methods=["POST", "GET"], view_func=controller.methods)
-    server.run(debug=True)
+    from .api import api as api_blueprint
+    app.register_blueprint(api_blueprint, url_prefix='/method')
+
+    return app
